@@ -1,4 +1,4 @@
-package classes;
+package basic.classes;
 
 public class Name {
 	private String firstName; // 성

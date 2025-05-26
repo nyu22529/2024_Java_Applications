@@ -1,4 +1,4 @@
-package classes;
+package basic.classes;
 
 public class Person {
 	private Name name; // 홍 길동

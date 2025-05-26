@@ -1,4 +1,4 @@
-package classes;
+package basic.classes;
 
 public class Address {
 	private String sigu; // 시구 정보
