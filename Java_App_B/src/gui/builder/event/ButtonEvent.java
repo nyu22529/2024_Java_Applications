@@ -51,7 +51,13 @@ public class ButtonEvent {
 		JButton btnAction = new JButton("Action");
 		btnAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("클릭");
+				
+				String str = btnAction.getText();
+				if(str.equals("Action")) {
+					btnAction.setText("Test");
+				} else {
+					btnAction.setText("Action");
+				}
 			}
 		});
 		btnAction.setFont(new Font("돋움", Font.BOLD, 20));
