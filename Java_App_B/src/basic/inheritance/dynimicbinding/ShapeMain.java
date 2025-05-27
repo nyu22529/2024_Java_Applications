@@ -7,15 +7,14 @@ public class ShapeMain {
 		Shape s = new Shape();
 		s.draw();
 		
-		Circle circle = new Circle();
-		circle.draw();
+		s = new Circle();
+		s.draw();
 		
-		Line line = new Line();
-		line.draw();
+		s = new Line();
+		s.draw();
 		
-		Rect rect = new Rect();
-		rect.draw();
-		
+		s = new Rect();
+		s.draw();
 	}
 
 }
