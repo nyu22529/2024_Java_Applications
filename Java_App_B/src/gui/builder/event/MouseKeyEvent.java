@@ -9,11 +9,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class MouseKeyEvent {
 
 	private JFrame frame;
 	private JLabel lblName;
+	private final int STEP = 30;
 
 	/**
 	 * Launch the application.
@@ -45,16 +47,33 @@ public class MouseKeyEvent {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				
+				/* lblName.setLocation(e.getPoint()); */
+			}
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				lblName.setLocation(e.getPoint());
+			}
+		});
 		frame.getContentPane().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
 				int code = e.getKeyCode();
-				
-				if(code == KeyEvent.VK_RIGHT) {
-					lblName.setLocation(lblName.getX() + 10, lblName.getY());
+
+				if (code == KeyEvent.VK_RIGHT) {
+					lblName.setLocation(lblName.getX() + STEP, lblName.getY());
+				} else if (code == KeyEvent.VK_LEFT) {
+					lblName.setLocation(lblName.getX() - STEP, lblName.getY());
+				} else if (code == KeyEvent.VK_UP) {
+					lblName.setLocation(lblName.getX(), lblName.getY() - STEP);
+				} else if (code == KeyEvent.VK_DOWN) {
+					lblName.setLocation(lblName.getX(), lblName.getY() + STEP);
 				}
-				
+
 				/* System.out.println("c = " + c + ", code = " + code); */
 			}
 		});
@@ -63,8 +82,8 @@ public class MouseKeyEvent {
 			public void mousePressed(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
-				
-				//System.out.println(x + ", " + y);
+
+				// System.out.println(x + ", " + y);
 				lblName.setLocation(x, y);
 			}
 		});
@@ -72,7 +91,7 @@ public class MouseKeyEvent {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		lblName = new JLabel("홍길동");
 		lblName.setFont(new Font("굴림", Font.BOLD, 20));
 		lblName.setBounds(80, 60, 65, 30);
@@ -80,7 +99,7 @@ public class MouseKeyEvent {
 		 * lblName.setLocation(80, 60); lblName.setSize(65, 30);
 		 */
 		frame.getContentPane().add(lblName);
-		
+
 		frame.getContentPane().requestFocus();
 	}
 }
