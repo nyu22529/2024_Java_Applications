@@ -1,4 +1,4 @@
-package basic.inheritance;
+package basic.inheritance.basic;
 
 public class Point {
 	private int x;

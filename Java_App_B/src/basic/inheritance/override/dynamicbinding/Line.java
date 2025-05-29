@@ -1,4 +1,4 @@
-package basic.inheritance.dynimicbinding;
+package basic.inheritance.override.dynamicbinding;
 
 public class Line extends Shape{
 	public void draw() {
