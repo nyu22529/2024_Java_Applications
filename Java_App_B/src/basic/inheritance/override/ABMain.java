@@ -6,9 +6,9 @@ public class ABMain {
 		A a = new A();
 		a.sort();
 		
-		B b = new B();
+		A b = new B();
 		b.sort();
-		b.test();
+		//b.test();
 	}
 
 }
