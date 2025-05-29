@@ -3,6 +3,16 @@ package basic.classes;
 public class Name {
 	private String firstName; // 성
 	private String lastName; // 이름
+	private int a;
+	
+	public void test1() {
+		a = 10;
+	}
+	
+	public void test2() {
+		System.out.println(a);
+	}
+	
 	
 	public Name(String firstName, String lastName) {
 		super();

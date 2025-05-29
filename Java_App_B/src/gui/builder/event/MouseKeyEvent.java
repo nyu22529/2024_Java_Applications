@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public class MouseKeyEvent {
 
 	private JFrame frame;
+	private JLabel lblName;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,8 @@ public class MouseKeyEvent {
 				int x = e.getX();
 				int y = e.getY();
 				
-				System.out.println(x + ", " + y);
+				//System.out.println(x + ", " + y);
+				lblName.setLocation(x, y);
 			}
 		});
 		frame.setTitle("마우스 키보드 이벤트");
@@ -55,7 +57,7 @@ public class MouseKeyEvent {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblName = new JLabel("홍길동");
+		lblName = new JLabel("홍길동");
 		lblName.setFont(new Font("굴림", Font.BOLD, 20));
 		lblName.setBounds(80, 60, 65, 30);
 		/*
