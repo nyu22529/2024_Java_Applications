@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MouseKeyEvent {
 
@@ -23,6 +25,7 @@ public class MouseKeyEvent {
 					MouseKeyEvent window = new MouseKeyEvent();
 					window.frame.setLocationRelativeTo(null);
 					window.frame.setVisible(true);
+					window.frame.getContentPane().requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,6 +45,19 @@ public class MouseKeyEvent {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char c = e.getKeyChar();
+				int code = e.getKeyCode();
+				
+				if(code == KeyEvent.VK_RIGHT) {
+					lblName.setLocation(lblName.getX() + 10, lblName.getY());
+				}
+				
+				/* System.out.println("c = " + c + ", code = " + code); */
+			}
+		});
 		frame.getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -64,5 +80,7 @@ public class MouseKeyEvent {
 		 * lblName.setLocation(80, 60); lblName.setSize(65, 30);
 		 */
 		frame.getContentPane().add(lblName);
+		
+		frame.getContentPane().requestFocus();
 	}
 }
