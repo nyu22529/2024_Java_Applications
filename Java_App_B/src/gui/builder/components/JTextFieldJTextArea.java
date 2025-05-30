@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JRadioButton;
 
 public class JTextFieldJTextArea {
 
@@ -16,6 +18,8 @@ public class JTextFieldJTextArea {
 	private JTextField tfInput;
 	private JTextArea ta;
 	private JScrollPane scrollPane;
+	private JRadioButton rdbtnNewRadioButton;
+	private JRadioButton rdbtnNewRadioButton_1;
 
 	/**
 	 * Launch the application.
@@ -52,37 +56,47 @@ public class JTextFieldJTextArea {
 		frmMyChat.getContentPane().setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 10, 412, 206);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(12, 10, 412, 122);
 		frmMyChat.getContentPane().add(scrollPane);
 		
 		ta = new JTextArea();
+		ta.setEditable(false);
+		ta.setLineWrap(true);
 		scrollPane.setViewportView(ta);
 		
 		tfInput = new JTextField();
 		tfInput.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String msg = tfInput.getText();
-				ta.append(msg + "\n");
-				tfInput.setText("");
-				tfInput.requestFocus();
+				sendMsg();
 			}
 		});
-		tfInput.setBounds(22, 226, 298, 29);
+		tfInput.setBounds(15, 143, 298, 29);
 		frmMyChat.getContentPane().add(tfInput);
 		tfInput.setColumns(10);
 		
 		JButton btnSend = new JButton("Send");
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String msg = tfInput.getText();
-				ta.append(msg + "\n");
-				tfInput.setText("");
-				tfInput.requestFocus();
+				sendMsg();
 			}
 		});
-		btnSend.setBounds(333, 226, 91, 23);
+		btnSend.setBounds(328, 143, 91, 23);
 		frmMyChat.getContentPane().add(btnSend);
 		
+		rdbtnNewRadioButton = new JRadioButton("영희");
+		rdbtnNewRadioButton.setBounds(111, 187, 55, 23);
+		frmMyChat.getContentPane().add(rdbtnNewRadioButton);
 		
+		rdbtnNewRadioButton_1 = new JRadioButton("철수");
+		rdbtnNewRadioButton_1.setBounds(269, 187, 55, 23);
+		frmMyChat.getContentPane().add(rdbtnNewRadioButton_1);
+	}
+	private void sendMsg() {
+		String msg = tfInput.getText();
+		ta.append("[클라이언트] : " + msg + "\n");
+		tfInput.setText("");
+		tfInput.requestFocus();
 	}
 }
