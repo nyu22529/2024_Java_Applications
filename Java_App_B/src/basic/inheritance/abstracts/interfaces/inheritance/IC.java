@@ -1,5 +1,5 @@
 package basic.inheritance.abstracts.interfaces.inheritance;
 
-public interface IB{
-	int sub(int x, int y);
+public interface IC extends IA, IB{
+	int mul(int x, int y);
 }
