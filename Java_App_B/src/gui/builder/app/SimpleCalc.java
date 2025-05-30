@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class SimpleCalc {
 
@@ -56,6 +57,8 @@ public class SimpleCalc {
 		frame.getContentPane().add(lblNewLabel);
 		
 		textField = new JTextField();
+		textField.setFont(new Font("굴림", Font.BOLD, 20));
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setBounds(104, 42, 96, 21);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -66,6 +69,8 @@ public class SimpleCalc {
 		frame.getContentPane().add(lblY);
 		
 		textField_1 = new JTextField();
+		textField_1.setFont(new Font("굴림", Font.BOLD, 20));
+		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_1.setColumns(10);
 		textField_1.setBounds(306, 42, 96, 21);
 		frame.getContentPane().add(textField_1);
@@ -86,6 +91,8 @@ public class SimpleCalc {
 		frame.getContentPane().add(btnNewButton_1_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setFont(new Font("굴림", Font.BOLD, 20));
+		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_2.setColumns(10);
 		textField_2.setBounds(218, 122, 96, 34);
 		frame.getContentPane().add(textField_2);
