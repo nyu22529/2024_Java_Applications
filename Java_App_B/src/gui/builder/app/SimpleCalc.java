@@ -9,13 +9,15 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SimpleCalc {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField tfX;
+	private JTextField tfY;
+	private JTextField tfResult;
 
 	/**
 	 * Launch the application.
@@ -56,46 +58,69 @@ public class SimpleCalc {
 		lblNewLabel.setBounds(26, 45, 50, 15);
 		frame.getContentPane().add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("굴림", Font.BOLD, 20));
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setBounds(104, 42, 96, 21);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		tfX = new JTextField();
+		tfX.setFont(new Font("굴림", Font.BOLD, 20));
+		tfX.setHorizontalAlignment(SwingConstants.CENTER);
+		tfX.setBounds(104, 42, 96, 21);
+		frame.getContentPane().add(tfX);
+		tfX.setColumns(10);
 		
 		JLabel lblY = new JLabel("Y = ");
 		lblY.setFont(new Font("굴림", Font.BOLD, 20));
 		lblY.setBounds(228, 45, 50, 15);
 		frame.getContentPane().add(lblY);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("굴림", Font.BOLD, 20));
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setColumns(10);
-		textField_1.setBounds(306, 42, 96, 21);
-		frame.getContentPane().add(textField_1);
+		tfY = new JTextField();
+		tfY.setFont(new Font("굴림", Font.BOLD, 20));
+		tfY.setHorizontalAlignment(SwingConstants.CENTER);
+		tfY.setColumns(10);
+		tfY.setBounds(306, 42, 96, 21);
+		frame.getContentPane().add(tfY);
 		
 		JButton btnNewButton = new JButton("+");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int x = Integer.parseInt(tfX.getText());
+				int y = Integer.parseInt(tfY.getText());
+				int result = x + y;
+				tfResult.setText(result + "");
+			}
+		});
 		btnNewButton.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton.setBounds(71, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("-");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int x = Integer.parseInt(tfX.getText());
+				int y = Integer.parseInt(tfY.getText());
+				int result = x - y;
+				tfResult.setText(result + "");
+			}
+		});
 		btnNewButton_1.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton_1.setBounds(192, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("C");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfX.setText("");
+				tfY.setText("");
+				tfResult.setText("");
+			}
+		});
 		btnNewButton_1_1.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton_1_1.setBounds(313, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton_1_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("굴림", Font.BOLD, 20));
-		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_2.setColumns(10);
-		textField_2.setBounds(218, 122, 96, 34);
-		frame.getContentPane().add(textField_2);
+		tfResult = new JTextField();
+		tfResult.setFont(new Font("굴림", Font.BOLD, 20));
+		tfResult.setHorizontalAlignment(SwingConstants.CENTER);
+		tfResult.setColumns(10);
+		tfResult.setBounds(218, 122, 96, 34);
+		frame.getContentPane().add(tfResult);
 		
 		JLabel lblResult = new JLabel("Result =");
 		lblResult.setFont(new Font("굴림", Font.BOLD, 20));
