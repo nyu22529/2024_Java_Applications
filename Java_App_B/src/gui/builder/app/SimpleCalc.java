@@ -4,7 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -52,57 +53,51 @@ public class SimpleCalc {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("X = ");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 20));
 		lblNewLabel.setBounds(26, 45, 50, 15);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		tfX = new JTextField();
 		tfX.setFont(new Font("굴림", Font.BOLD, 20));
 		tfX.setHorizontalAlignment(SwingConstants.CENTER);
 		tfX.setBounds(104, 42, 96, 21);
 		frame.getContentPane().add(tfX);
 		tfX.setColumns(10);
-		
+
 		JLabel lblY = new JLabel("Y = ");
 		lblY.setFont(new Font("굴림", Font.BOLD, 20));
 		lblY.setBounds(228, 45, 50, 15);
 		frame.getContentPane().add(lblY);
-		
+
 		tfY = new JTextField();
 		tfY.setFont(new Font("굴림", Font.BOLD, 20));
 		tfY.setHorizontalAlignment(SwingConstants.CENTER);
 		tfY.setColumns(10);
 		tfY.setBounds(306, 42, 96, 21);
 		frame.getContentPane().add(tfY);
-		
+
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int x = Integer.parseInt(tfX.getText());
-				int y = Integer.parseInt(tfY.getText());
-				int result = x + y;
-				tfResult.setText(result + "");
+				calc('+');
 			}
 		});
 		btnNewButton.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton.setBounds(71, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("-");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int x = Integer.parseInt(tfX.getText());
-				int y = Integer.parseInt(tfY.getText());
-				int result = x - y;
-				tfResult.setText(result + "");
+				calc('-');
 			}
 		});
 		btnNewButton_1.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton_1.setBounds(192, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton_1);
-		
+
 		JButton btnNewButton_1_1 = new JButton("C");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,17 +109,43 @@ public class SimpleCalc {
 		btnNewButton_1_1.setFont(new Font("굴림", Font.BOLD, 20));
 		btnNewButton_1_1.setBounds(313, 70, 50, 39);
 		frame.getContentPane().add(btnNewButton_1_1);
-		
+
 		tfResult = new JTextField();
 		tfResult.setFont(new Font("굴림", Font.BOLD, 20));
 		tfResult.setHorizontalAlignment(SwingConstants.CENTER);
 		tfResult.setColumns(10);
 		tfResult.setBounds(218, 122, 96, 34);
 		frame.getContentPane().add(tfResult);
-		
+
 		JLabel lblResult = new JLabel("Result =");
 		lblResult.setFont(new Font("굴림", Font.BOLD, 20));
 		lblResult.setBounds(109, 124, 81, 31);
 		frame.getContentPane().add(lblResult);
 	}
+
+	private void calc(char op) {
+
+		String strX = tfX.getText();
+		String strY = tfY.getText();
+
+		if (!strX.equals("") && !strY.equals("")) {
+
+			int x = Integer.parseInt(strX);
+			int y = Integer.parseInt(strY);
+			int result = 0;
+
+			switch (op) {
+			case '+':
+				result = x + y;
+				break;
+			case '-':
+				result = x - y;
+				break;
+			}
+			tfResult.setText(result + "");
+		} else {
+			JOptionPane.showMessageDialog(frame, "입력중에 빈 값이 있습니다.", "빈값 확인", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
 }
