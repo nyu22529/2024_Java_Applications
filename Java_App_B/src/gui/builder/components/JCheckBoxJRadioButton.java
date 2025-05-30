@@ -21,6 +21,7 @@ public class JCheckBoxJRadioButton {
 	private JLabel lblResult;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	private JLabel lblmage;
 	
 	/**
 	 * Launch the application.
@@ -119,35 +120,52 @@ public class JCheckBoxJRadioButton {
 		frame.getContentPane().add(lblResult);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("남자");
+		rdbtnNewRadioButton.setBorderPainted(true);
 		rdbtnNewRadioButton.setSelected(true);
 		buttonGroup.add(rdbtnNewRadioButton);
 		rdbtnNewRadioButton.setBounds(70, 166, 113, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("여자");
+		rdbtnNewRadioButton_1.setBorderPainted(true);
 		buttonGroup.add(rdbtnNewRadioButton_1);
 		rdbtnNewRadioButton_1.setBounds(253, 166, 113, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_1);
 		
+		lblmage = new JLabel("");
+		lblmage.setIcon(new ImageIcon(JCheckBoxJRadioButton.class.getResource("/gui/builder/images/apple.jpg")));
+		lblmage.setBounds(174, 240, 88, 82);
+		frame.getContentPane().add(lblmage);
+		
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("사과");
+		rdbtnNewRadioButton_2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				lblmage.setIcon(new ImageIcon(JCheckBoxJRadioButton.class.getResource("/gui/builder/images/apple.jpg")));
+			}
+		});
 		buttonGroup_1.add(rdbtnNewRadioButton_2);
 		rdbtnNewRadioButton_2.setSelected(true);
 		rdbtnNewRadioButton_2.setBounds(67, 211, 56, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_2);
 		
 		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("배");
+		rdbtnNewRadioButton_3.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				lblmage.setIcon(new ImageIcon(JCheckBoxJRadioButton.class.getResource("/gui/builder/images/pear.jpg")));
+			}
+		});
 		buttonGroup_1.add(rdbtnNewRadioButton_3);
 		rdbtnNewRadioButton_3.setBounds(190, 211, 56, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_3);
 		
 		JRadioButton rdbtnNewRadioButton_4 = new JRadioButton("체리");
+		rdbtnNewRadioButton_4.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				lblmage.setIcon(new ImageIcon(JCheckBoxJRadioButton.class.getResource("/gui/builder/images/cherry.jpg")));
+			}
+		});
 		buttonGroup_1.add(rdbtnNewRadioButton_4);
 		rdbtnNewRadioButton_4.setBounds(313, 211, 56, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_4);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(JCheckBoxJRadioButton.class.getResource("/gui/builder/images/apple.jpg")));
-		lblNewLabel_1.setBounds(174, 240, 88, 82);
-		frame.getContentPane().add(lblNewLabel_1);
 	}
 }
