@@ -7,6 +7,8 @@ import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Font;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -15,8 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.awt.event.ActionEvent;
 
 public class MyEditor {
@@ -79,6 +85,12 @@ public class MyEditor {
 		toolBar.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openAction();
+			}
+
+		});
 		btnNewButton_1.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/open.png")));
 		toolBar.add(btnNewButton_1);
 		
@@ -152,5 +164,21 @@ public class MyEditor {
 				"종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) {
 			System.exit(0);					
 		}
+	}
+	
+	private void openAction() {
+		JFileChooser fc = new JFileChooser();
+		File current = new File("./src/gui/builder/basic");
+		fc.setCurrentDirectory(current);
+		
+		fc.addChoosableFileFilter(new FileNameExtensionFilter("Java", "java"));
+		fc.addChoosableFileFilter(new FileNameExtensionFilter("Text", "txt"));
+		fc.setAcceptAllFileFilterUsed(true);
+		
+		fc.showOpenDialog(frmMyeditorVer);
+		
+		File in = fc.getSelectedFile();
+		
+		BufferedReader br = new BufferedReader(new FileReader(in));
 	}
 }
