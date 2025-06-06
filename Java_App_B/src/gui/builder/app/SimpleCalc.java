@@ -129,23 +129,30 @@ public class SimpleCalc {
 		String strY = tfY.getText();
 
 		if (!strX.equals("") && !strY.equals("")) {
-
-			int x = Integer.parseInt(strX);
-			int y = Integer.parseInt(strY);
-			int result = 0;
-
-			switch (op) {
-			case '+':
-				result = x + y;
-				break;
-			case '-':
-				result = x - y;
-				break;
+			if(isNumber(strX) && isNumber(strY)) {
+				int x = Integer.parseInt(strX);
+				int y = Integer.parseInt(strY);
+				int result = 0;
+	
+				switch (op) {
+				case '+':
+					result = x + y;
+					break;
+				case '-':
+					result = x - y;
+					break;
+				}
+				tfResult.setText(result + "");
+			} else {
+				JOptionPane.showMessageDialog(frame, "입력중에 숫자가 아닌 값이 있습니다.", "숫자 확인", JOptionPane.WARNING_MESSAGE);
 			}
-			tfResult.setText(result + "");
 		} else {
 			JOptionPane.showMessageDialog(frame, "입력중에 빈 값이 있습니다.", "빈값 확인", JOptionPane.WARNING_MESSAGE);
 		}
+	}
+	
+	public boolean isNumber(String strValue) {
+		return strValue.matches("[-+]?\\d*\\.?\\d+");
 	}
 
 }
