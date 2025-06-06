@@ -70,6 +70,11 @@ public class MyEditor {
 		frmMyeditorVer.getContentPane().add(toolBar, BorderLayout.NORTH);
 		
 		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ta.setText("");
+			}
+		});
 		btnNewButton.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/new.png")));
 		toolBar.add(btnNewButton);
 		
@@ -100,6 +105,11 @@ public class MyEditor {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("New");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ta.setText("");
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JSeparator separator = new JSeparator();
@@ -129,6 +139,11 @@ public class MyEditor {
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Program Info");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frmMyeditorVer, "간단 텍스트 에디터 ver 0.1\n by 나영우", "프로그램 정보", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_4);
 	}
 	
