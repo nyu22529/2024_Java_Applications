@@ -11,7 +11,13 @@ import java.awt.Font;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MyEditor {
 
@@ -60,6 +66,33 @@ public class MyEditor {
 		ta.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		scrollPane.setViewportView(ta);
 		
+		JToolBar toolBar = new JToolBar();
+		frmMyeditorVer.getContentPane().add(toolBar, BorderLayout.NORTH);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/new.png")));
+		toolBar.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/open.png")));
+		toolBar.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/save.png")));
+		toolBar.add(btnNewButton_2);
+		
+		toolBar.addSeparator();
+		
+		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				exitAction();
+			}
+		});
+		
+		btnNewButton_3.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/exit.png")));
+		toolBar.add(btnNewButton_3);
+		
 		JMenuBar menuBar = new JMenuBar();
 		frmMyeditorVer.setJMenuBar(menuBar);
 		
@@ -82,6 +115,11 @@ public class MyEditor {
 		mnNewMenu.add(separator_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Exit");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				exitAction();
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
 		JMenu mnNewMenu_1 = new JMenu("Edit");
@@ -92,5 +130,12 @@ public class MyEditor {
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Program Info");
 		mnNewMenu_2.add(mntmNewMenuItem_4);
+	}
+	
+	private void exitAction() {
+		if(JOptionPane.showConfirmDialog(frmMyeditorVer, "정말 끝낼까요?",
+				"종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) {
+			System.exit(0);					
+		}
 	}
 }
