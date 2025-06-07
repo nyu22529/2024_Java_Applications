@@ -1,14 +1,17 @@
 package basic.file;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileEx {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		File f1 = new File("C:/Temp");
 		File f2 = new File("C:/Temp/test");
+		File f3 = new File("C:/Temp/t.txt");
+		
 		String res = "";
 		if(f1.isFile()) {
 			res = "파일";
@@ -20,6 +23,12 @@ public class FileEx {
 		if(!f2.exists()) {
 			f2.mkdir();
 		}
+		
+		if(!f3.exists()) {
+			f3.createNewFile();
+		}
+		
+		f3.renameTo(new File("C:/Temp/s.txt"));
 		
 		File[] names = f1.listFiles();
 		for (int i = 0; i < names.length; i++) {
