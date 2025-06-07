@@ -21,9 +21,11 @@ import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
@@ -98,6 +100,38 @@ public class MyEditor {
 		toolBar.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				File current = new File("./src/gui/builder/basic");
+				fc.setCurrentDirectory(current);
+				
+				fc.addChoosableFileFilter(new FileNameExtensionFilter("Java", "java"));
+				fc.addChoosableFileFilter(new FileNameExtensionFilter("Text", "txt"));
+				fc.setAcceptAllFileFilterUsed(true);
+				
+				fc.showSaveDialog(frmMyeditorVer);
+				
+				File out = fc.getSelectedFile();
+				
+				BufferedWriter bw = null;
+				try {
+					bw = new BufferedWriter(new FileWriter(out));
+					String str = ta.getText();
+					bw.write(str);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} finally {
+					if(bw != null) {
+						try {
+							bw.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 		btnNewButton_2.setIcon(new ImageIcon(MyEditor.class.getResource("/gui/builder/images/save.png")));
 		toolBar.add(btnNewButton_2);
 		
@@ -181,6 +215,13 @@ public class MyEditor {
 		fc.showOpenDialog(frmMyeditorVer);
 		
 		File in = fc.getSelectedFile();
+		
+		if(in == null) {
+			JOptionPane.showMessageDialog(frmMyeditorVer, "파일을 선택하지 않았습니다.");
+			return;
+		}
+		
+		ta.setText("");
 		
 		BufferedReader br = null;
 		
