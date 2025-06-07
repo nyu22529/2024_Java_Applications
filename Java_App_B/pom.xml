@@ -6,7 +6,12 @@
   <description>자바 응용</description>
   
   <dependencies>
-	  
+  <!-- https://mvnrepository.com/artifact/com.fifesoft/rsyntaxtextarea -->
+	<dependency>
+	    <groupId>com.fifesoft</groupId>
+	    <artifactId>rsyntaxtextarea</artifactId>
+	    <version>3.4.0</version>
+	</dependency>
   </dependencies>
   
   <build>

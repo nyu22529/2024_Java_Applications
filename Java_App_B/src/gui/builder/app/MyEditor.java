@@ -9,6 +9,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 import java.awt.Font;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -32,7 +36,7 @@ import java.awt.event.ActionEvent;
 public class MyEditor {
 
 	private JFrame frmMyeditorVer;
-	private JTextArea ta;
+	private RSyntaxTextArea ta;
 
 	/**
 	 * Launch the application.
@@ -68,14 +72,21 @@ public class MyEditor {
 		frmMyeditorVer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMyeditorVer.getContentPane().setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		frmMyeditorVer.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		/*
+		 * JScrollPane scrollPane = new JScrollPane();
+		 * scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.
+		 * VERTICAL_SCROLLBAR_ALWAYS);
+		 */
 
-		ta = new JTextArea();
+		ta = new RSyntaxTextArea();
 		ta.setLineWrap(true);
 		ta.setFont(new Font("Monospaced", Font.PLAIN, 18));
-		scrollPane.setViewportView(ta);
+		ta.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+		//ta.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+		ta.setCodeFoldingEnabled(true);
+		
+		RTextScrollPane sp = new RTextScrollPane(ta);
+		frmMyeditorVer.getContentPane().add(sp, BorderLayout.CENTER);
 
 		JToolBar toolBar = new JToolBar();
 		frmMyeditorVer.getContentPane().add(toolBar, BorderLayout.NORTH);
