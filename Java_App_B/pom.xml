@@ -6,11 +6,18 @@
   <description>자바 응용</description>
   
   <dependencies>
-  <!-- https://mvnrepository.com/artifact/com.fifesoft/rsyntaxtextarea -->
+  	<!-- https://mvnrepository.com/artifact/com.fifesoft/rsyntaxtextarea -->
 	<dependency>
 	    <groupId>com.fifesoft</groupId>
 	    <artifactId>rsyntaxtextarea</artifactId>
 	    <version>3.4.0</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+	<dependency>
+	    <groupId>com.mysql</groupId>
+	    <artifactId>mysql-connector-j</artifactId>
+	    <version>8.4.0</version>
 	</dependency>
   </dependencies>
   
