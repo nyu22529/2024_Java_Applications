@@ -22,12 +22,15 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class MyEditor {
 
 	private JFrame frmMyeditorVer;
+	private JTextArea ta;
 
 	/**
 	 * Launch the application.
@@ -67,7 +70,7 @@ public class MyEditor {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frmMyeditorVer.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		JTextArea ta = new JTextArea();
+		ta = new JTextArea();
 		ta.setLineWrap(true);
 		ta.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		scrollPane.setViewportView(ta);
@@ -179,6 +182,28 @@ public class MyEditor {
 		
 		File in = fc.getSelectedFile();
 		
-		BufferedReader br = new BufferedReader(new FileReader(in));
+		BufferedReader br = null;
+		
+		try {
+			br = new BufferedReader(new FileReader(in));
+			String line = null;
+			while((line = br.readLine()) != null) {
+				ta.append(line + "\n");
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println("파일을 읽는 과정에서 예외 발생");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("파일을 입출력하는 과정에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
