@@ -155,4 +155,10 @@ public class SimpleCalc {
 		return strValue.matches("[-+]?\\d*\\.?\\d+");
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	
+
 }

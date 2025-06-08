@@ -13,6 +13,7 @@ public class DB {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/java_b?serverTimezone=UTC", "root",
 					"rootroot");
+			System.out.println("디비 연결 성공");
 			return conn;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

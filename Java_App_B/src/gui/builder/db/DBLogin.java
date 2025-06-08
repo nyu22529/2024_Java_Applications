@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import gui.builder.app.SimpleCalc;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
@@ -93,6 +96,13 @@ public class DBLogin {
 						
 						System.out.println(id + " - " + name);
 						JOptionPane.showMessageDialog(frame, "아이디와 패스워드가 일치합니다.");
+						
+						SimpleCalc calc = new SimpleCalc();
+						calc.getFrame().setLocationRelativeTo(null);
+						calc.getFrame().setVisible(true);
+						
+						frame.setVisible(false);
+						
 					} else {
 						JOptionPane.showMessageDialog(frame, "아이디와 패스워드가 일치하지 않습니다.");
 					}
