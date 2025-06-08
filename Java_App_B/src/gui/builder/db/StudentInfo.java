@@ -3,6 +3,8 @@ package gui.builder.db;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -10,12 +12,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
@@ -23,8 +28,15 @@ public class StudentInfo {
 
 	private JFrame frame;
 	private JTable table;
-	private JTextField textField;
+	private JTextField tfID;
 	private Connection conn;
+	
+	private final DefaultTableModel tableModel = new DefaultTableModel();
+	private JTextField tfUsername;
+	private JTextField tfPassword;
+	private JTextField tfAge;
+	private JTextField tfDept;
+	private JTextField tfGrade;
 
 	/**
 	 * Launch the application.
@@ -47,8 +59,8 @@ public class StudentInfo {
 	 * Create the application.
 	 */
 	public StudentInfo() {
-		initialize();
 		conn = DB.init();
+		initialize();
 	}
 
 	/**
@@ -56,58 +68,101 @@ public class StudentInfo {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 635, 410);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(214, 42, 197, 196);
+		scrollPane.setBounds(314, 43, 293, 316);
 		frame.getContentPane().add(scrollPane);
 		
-		table = new JTable();
+		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		
 		JButton btnNewButton = new JButton("Load Data");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				refreshTable();
+			}
+		});
+		btnNewButton.setBounds(510, 10, 97, 23);
+		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Search");
+		btnNewButton_1.setBounds(401, 10, 97, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Save");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
 				try {
-					String sql = "SELECT * FROM student_info";
+					String sql = "INSERT INTO java_b.student_info "
+							+ "(name, password, age,dept, grade) "
+							+ "VALUES(?, ?, ?, ?, ?);";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
-					ResultSet rs = pstmt.executeQuery();
+					pstmt.setString(1, tfUsername.getText());
+					pstmt.setString(2, tfPassword.getText());
+					pstmt.setInt(3, Integer.parseInt(tfAge.getText()));
+					pstmt.setString(4, tfDept.getText());
+					pstmt.setString(5, tfGrade.getText());
 					
-					setTableFromDB(rs);
+					pstmt.execute();
+					
+					JOptionPane.showMessageDialog(frame, "Data Saved");
 					
 					pstmt.close();
-					rs.close();
 					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				
+				refreshTable();
 			}
 		});
-		btnNewButton.setBounds(314, 10, 97, 23);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Search");
-		btnNewButton_1.setBounds(205, 10, 97, 23);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Save");
-		btnNewButton_2.setBounds(12, 160, 97, 23);
+		btnNewButton_2.setBounds(12, 270, 97, 23);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Update");
-		btnNewButton_3.setBounds(12, 195, 97, 23);
+		btnNewButton_3.setBounds(12, 303, 97, 23);
 		frame.getContentPane().add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("Delete");
-		btnNewButton_4.setBounds(12, 228, 97, 23);
+		btnNewButton_4.setBounds(12, 336, 97, 23);
 		frame.getContentPane().add(btnNewButton_4);
 		
-		textField = new JTextField();
-		textField.setBounds(77, 11, 116, 21);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		tfID = new JTextField();
+		tfID.setEnabled(false);
+		tfID.setBounds(186, 43, 116, 21);
+		frame.getContentPane().add(tfID);
+		tfID.setColumns(10);
+		
+		tfUsername = new JTextField();
+		tfUsername.setBounds(186, 74, 116, 21);
+		frame.getContentPane().add(tfUsername);
+		tfUsername.setColumns(10);
+		
+		tfPassword = new JTextField();
+		tfPassword.setColumns(10);
+		tfPassword.setBounds(186, 105, 116, 21);
+		frame.getContentPane().add(tfPassword);
+		
+		tfAge = new JTextField();
+		tfAge.setColumns(10);
+		tfAge.setBounds(186, 136, 116, 21);
+		frame.getContentPane().add(tfAge);
+		
+		tfDept = new JTextField();
+		tfDept.setColumns(10);
+		tfDept.setBounds(186, 167, 116, 21);
+		frame.getContentPane().add(tfDept);
+		
+		tfGrade = new JTextField();
+		tfGrade.setBounds(186, 198, 116, 21);
+		frame.getContentPane().add(tfGrade);
+		tfGrade.setColumns(10);
+		
+		refreshTable();
 	}
 	
 	private void setTableFromDB(ResultSet rs) throws SQLException {
@@ -120,9 +175,35 @@ public class StudentInfo {
 			columnNames.add(metaData.getColumnName(i));
 		}
 		
-		for (String column : columnNames) {
-			System.out.println(column);
+		/*
+		 * for (String column : columnNames) { System.out.println(column); }
+		 */
+		
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while(rs.next()) {
+			Vector<Object> row = new Vector<Object>();
+			for (int i = 1; i <= cnt; i++) {
+				row.add(rs.getObject(i));
+			}
+			data.add(row);
 		}
 		
+		tableModel.setDataVector(data, columnNames);
+	}
+	
+	private void refreshTable() {
+		try {
+			String sql = "SELECT * FROM student_info";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			setTableFromDB(rs);
+			
+			pstmt.close();
+			rs.close();
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
