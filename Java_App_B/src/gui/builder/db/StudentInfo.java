@@ -25,6 +25,10 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class StudentInfo {
 
@@ -39,6 +43,8 @@ public class StudentInfo {
 	private JTextField tfAge;
 	private JTextField tfDept;
 	private JTextField tfGrade;
+	private JTextField tfSearch;
+	private JComboBox cbName;
 
 	/**
 	 * Launch the application.
@@ -89,10 +95,10 @@ public class StudentInfo {
 					String sql = "SELECT * FROM java_b.student_info where id = ?";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, id);
-					
+
 					ResultSet rs = pstmt.executeQuery();
-					
-					while(rs.next()) {
+
+					while (rs.next()) {
 						tfID.setText(rs.getString("id"));
 						tfUsername.setText(rs.getString("name"));
 						tfPassword.setText(rs.getString("password"));
@@ -100,10 +106,10 @@ public class StudentInfo {
 						tfDept.setText(rs.getString("dept"));
 						tfGrade.setText(rs.getString("grade"));
 					}
-					
+
 					pstmt.close();
 					rs.close();
-					
+
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -131,7 +137,7 @@ public class StudentInfo {
 
 				try {
 					String sql = "INSERT INTO java_b.student_info " + "(name, password, age,dept, grade) "
-							+ "VALUES(?, ?, ?, ?, ?);";
+							+ "VALUES(?, ?, ?, ?, ?)";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, tfUsername.getText());
 					pstmt.setString(2, tfPassword.getText());
@@ -150,16 +156,67 @@ public class StudentInfo {
 				}
 
 				refreshTable();
+				refreshCombo();
 			}
 		});
 		btnNewButton_2.setBounds(12, 270, 97, 23);
 		frame.getContentPane().add(btnNewButton_2);
 
 		JButton btnNewButton_3 = new JButton("Update");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String sql = "UPDATE java_b.student_info " + "SET password=?, name=?, dept=?, grade=?, age=? "
+							+ "WHERE id=?";
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+
+					pstmt.setString(2, tfUsername.getText());
+					pstmt.setString(1, tfPassword.getText());
+					pstmt.setInt(5, Integer.parseInt(tfAge.getText()));
+					pstmt.setString(3, tfDept.getText());
+					pstmt.setString(4, tfGrade.getText());
+					pstmt.setString(6, tfID.getText());
+
+					pstmt.execute();
+
+					JOptionPane.showMessageDialog(frame, "Data Updated");
+
+					pstmt.close();
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				refreshTable();
+			}
+
+		});
 		btnNewButton_3.setBounds(12, 303, 97, 23);
 		frame.getContentPane().add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("Delete");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String sql = "DELETE FROM java_b.student_info "
+							+ "WHERE id=?";
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+
+					pstmt.setString(１, tfID.getText());
+
+					pstmt.execute();
+
+					JOptionPane.showMessageDialog(frame, "Data Deleted");
+
+					pstmt.close();
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				refreshTable();
+			}
+		});
 		btnNewButton_4.setBounds(12, 336, 97, 23);
 		frame.getContentPane().add(btnNewButton_4);
 
@@ -193,8 +250,73 @@ public class StudentInfo {
 		tfGrade.setBounds(186, 198, 116, 21);
 		frame.getContentPane().add(tfGrade);
 		tfGrade.setColumns(10);
+		
+		JComboBox cbCategory = new JComboBox();
+		cbCategory.setModel(new DefaultComboBoxModel(new String[] {"id", "name", "password", "age", "dept", "grade"}));
+		cbCategory.setBounds(12, 10, 70, 23);
+		frame.getContentPane().add(cbCategory);
+		
+		tfSearch = new JTextField();
+		tfSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String category = (String) cbCategory.getSelectedItem();
+				String search = tfSearch.getText();
+				
+				try {
+					String sql = "SELECT * FROM java_b.student_info where "+ category +" like ?";
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "%" + search + "%");
+
+					ResultSet rs = pstmt.executeQuery();
+					
+					setTableFromDB(rs);
+
+					pstmt.close();
+					rs.close();
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		tfSearch.setBounds(94, 11, 116, 21);
+		frame.getContentPane().add(tfSearch);
+		tfSearch.setColumns(10);
+		
+		cbName = new JComboBox();
+		cbName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = (String) cbName.getSelectedItem();
+				
+				try {
+					String sql = "SELECT * FROM student_info where name = ?";
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, name);
+					ResultSet rs = pstmt.executeQuery();
+					
+					while (rs.next()) {
+						tfID.setText(rs.getString("id"));
+						tfUsername.setText(rs.getString("name"));
+						tfPassword.setText(rs.getString("password"));
+						tfAge.setText(rs.getString("age"));
+						tfDept.setText(rs.getString("dept"));
+						tfGrade.setText(rs.getString("grade"));
+					}
+
+					pstmt.close();
+					rs.close();
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		cbName.setBounds(12, 40, 97, 23);
+		frame.getContentPane().add(cbName);
 
 		refreshTable();
+		refreshCombo();
 	}
 
 	private void setTableFromDB(ResultSet rs) throws SQLException {
@@ -230,6 +352,25 @@ public class StudentInfo {
 			ResultSet rs = pstmt.executeQuery();
 
 			setTableFromDB(rs);
+
+			pstmt.close();
+			rs.close();
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private void refreshCombo() {
+		cbName.removeAllItems();
+		try {
+			String sql = "SELECT name FROM student_info";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				cbName.addItem(rs.getString("name"));
+			}
 
 			pstmt.close();
 			rs.close();
