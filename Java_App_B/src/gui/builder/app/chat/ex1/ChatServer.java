@@ -1,4 +1,4 @@
-package gui.builder.app.chat;
+package gui.builder.app.chat.ex1;
 
 import java.awt.EventQueue;
 
